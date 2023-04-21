@@ -2,10 +2,10 @@
 
 namespace MovieStoreMvc.Models.Domain
 {
-    public class MovieGenre
+    public class ChuongMuc
     {
         public int Id { get; set; }
-        public int MovieId { get; set; }
-        public int GenreId { get; set; }
+        [Required]
+        public string? TenChuong { get; set; }
     }
 }

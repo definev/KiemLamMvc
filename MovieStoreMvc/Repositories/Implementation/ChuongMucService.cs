@@ -3,18 +3,18 @@ using MovieStoreMvc.Repositories.Abstract;
 
 namespace MovieStoreMvc.Repositories.Implementation
 {
-    public class GenreService : IGenreService
+    public class ChuongMucService : IChuongMucService
     {
         private readonly DatabaseContext ctx;
-        public GenreService(DatabaseContext ctx)
+        public ChuongMucService(DatabaseContext ctx)
         {
             this.ctx = ctx;
         }
-        public bool Add(Genre model)
+        public bool Add(ChuongMuc model)
         {
             try
             {
-                ctx.Genre.Add(model);
+                ctx.ChuongMuc.Add(model);
                 ctx.SaveChanges();
                 return true;
             }
@@ -31,7 +31,7 @@ namespace MovieStoreMvc.Repositories.Implementation
                 var data = this.GetById(id);
                 if (data == null)
                     return false;
-                ctx.Genre.Remove(data);
+                ctx.ChuongMuc.Remove(data);
                 ctx.SaveChanges();
                 return true;
             }
@@ -41,22 +41,22 @@ namespace MovieStoreMvc.Repositories.Implementation
             }
         }
 
-        public Genre GetById(int id)
+        public ChuongMuc GetById(int id)
         {
-            return ctx.Genre.Find(id);
+            return ctx.ChuongMuc.Find(id);
         }
 
-        public IQueryable<Genre> List()
+        public IQueryable<ChuongMuc> List()
         {
-            var data = ctx.Genre.AsQueryable();
+            var data = ctx.ChuongMuc.AsQueryable();
             return data;
         }
 
-        public bool Update(Genre model)
+        public bool Update(ChuongMuc model)
         {
             try
             {
-                ctx.Genre.Update(model);
+                ctx.ChuongMuc.Update(model);
                 ctx.SaveChanges();
                 return true;
             }

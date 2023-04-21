@@ -4,26 +4,26 @@ using MovieStoreMvc.Repositories.Abstract;
 
 namespace MovieStoreMvc.Repositories.Implementation
 {
-    public class MovieService : IMovieService
+    public class DieuLuatService : IDieuLuatService
     {
         private readonly DatabaseContext ctx;
-        public MovieService(DatabaseContext ctx)
+        public DieuLuatService(DatabaseContext ctx)
         {
             this.ctx = ctx;
         }
-        public bool Add(Movie model)
+        public bool Add(DieuLuat model)
         {
             try
             {
                 
                 ctx.Movie.Add(model);
                 ctx.SaveChanges();
-                foreach (int genreId in model.Genres)
+                foreach (int genreId in model.ChuongMuc)
                 {
-                    var movieGenre = new MovieGenre
+                    var movieGenre = new DieuLuatChuongMuc
                     {
                         MovieId = model.Id,
-                        GenreId = genreId
+                        ChuongMucId = genreId
                     };
                     ctx.MovieGenre.Add(movieGenre);
                 }
@@ -44,6 +44,7 @@ namespace MovieStoreMvc.Repositories.Implementation
                 if (data == null)
                     return false;
                 var movieGenres= ctx.MovieGenre.Where(a => a.MovieId == data.Id);
+                
                 foreach(var movieGenre in movieGenres)
                 {
                     ctx.MovieGenre.Remove(movieGenre);
@@ -58,14 +59,14 @@ namespace MovieStoreMvc.Repositories.Implementation
             }
         }
 
-        public Movie GetById(int id)
+        public DieuLuat GetById(int id)
         {
             return ctx.Movie.Find(id);
         }
 
-        public MovieListVm List(string term="",bool paging=false, int currentPage=0)
+        public DieuLuatListVm List(string term="",bool paging=false, int currentPage=0)
         {
-            var data = new MovieListVm();
+            var data = new DieuLuatListVm();
            
             var list = ctx.Movie.ToList();
            
@@ -73,7 +74,7 @@ namespace MovieStoreMvc.Repositories.Implementation
             if (!string.IsNullOrEmpty(term))
             {
                 term = term.ToLower();
-                list = list.Where(a => a.Title.ToLower().StartsWith(term)).ToList();
+                list = list.Where(a => a.Name.ToLower().StartsWith(term)).ToList();
             }
 
             if (paging)
@@ -90,36 +91,36 @@ namespace MovieStoreMvc.Repositories.Implementation
 
             foreach (var movie in list)
             {
-                var genres = (from genre in ctx.Genre
+                var genres = (from genre in ctx.ChuongMuc
                               join mg in ctx.MovieGenre
-                              on genre.Id equals mg.GenreId
+                              on genre.Id equals mg.ChuongMucId
                               where mg.MovieId == movie.Id
-                              select genre.GenreName
+                              select genre.TenChuong
                               ).ToList();
                 var genreNames = string.Join(',', genres);
-                movie.GenreNames = genreNames;
+                movie.ChuongMucNames = genreNames;
             }
             data.MovieList = list.AsQueryable();
             return data;
         }
 
-        public bool Update(Movie model)
+        public bool Update(DieuLuat model)
         {
             try
             {
                 // these genreIds are not selected by users and still present is movieGenre table corresponding to
                 // this movieId. So these ids should be removed.
-                var genresToDeleted = ctx.MovieGenre.Where(a => a.MovieId == model.Id && !model.Genres.Contains(a.GenreId)).ToList();
+                var genresToDeleted = ctx.MovieGenre.Where(a => a.MovieId == model.Id && !model.ChuongMuc.Contains(a.ChuongMucId)).ToList();
                 foreach(var mGenre in genresToDeleted)
                 {
                     ctx.MovieGenre.Remove(mGenre);
                 }
-                foreach (int genId in model.Genres)
+                foreach (int genId in model.ChuongMuc)
                 {
-                    var movieGenre = ctx.MovieGenre.FirstOrDefault(a => a.MovieId == model.Id && a.GenreId == genId);
+                    var movieGenre = ctx.MovieGenre.FirstOrDefault(a => a.MovieId == model.Id && a.ChuongMucId == genId);
                     if (movieGenre == null)
                     {
-                        movieGenre = new MovieGenre { GenreId = genId, MovieId = model.Id };
+                        movieGenre = new DieuLuatChuongMuc { ChuongMucId = genId, MovieId = model.Id };
                         ctx.MovieGenre.Add(movieGenre);
                     }
                 }
@@ -137,7 +138,7 @@ namespace MovieStoreMvc.Repositories.Implementation
 
         public List<int> GetGenreByMovieId(int movieId)
         {
-            var genreIds = ctx.MovieGenre.Where(a => a.MovieId == movieId).Select(a => a.GenreId).ToList();
+            var genreIds = ctx.MovieGenre.Where(a => a.MovieId == movieId).Select(a => a.ChuongMucId).ToList();
             return genreIds;
         }
        

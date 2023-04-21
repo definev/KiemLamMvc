@@ -20,7 +20,7 @@ form{
   padding-left: 28.5%;
 }
 .input-container {
-    width: 100%;
+    width: 500px;
     display: flex;
     padding: 0.4rem 0;
 }

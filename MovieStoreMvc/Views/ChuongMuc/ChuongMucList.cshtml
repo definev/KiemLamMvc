@@ -1,0 +1,27 @@
+﻿@model IEnumerable<MovieStoreMvc.Models.Domain.ChuongMuc>
+@{
+}
+
+<div class="tbl-container">
+    <h2>Genres</h2>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+        @foreach(var item in Model){
+        <tr>
+            <td>@item.TenChuong</td>
+            <td>
+                <a href="/ChuongMuc/Edit?id=@item.Id" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                    <a onclick="return window.confirm('Are you sure?')" href="/ChuongMuc/Delete?id=@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+        }
+     
+    </table>
+    <div class="input-container">
+        <a href="/ChuongMuc/Add" class="btn btn-sec">Add</a>
+    </div>
+</div>

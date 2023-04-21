@@ -5,25 +5,20 @@ namespace MovieStoreMvc.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IMovieService _movieService;
-        public HomeController(IMovieService movieService)
+        private readonly IDieuLuatService _dieuLuatService;
+        public HomeController(IDieuLuatService dieuLuatService)
         {
-            _movieService = movieService;
+            _dieuLuatService = dieuLuatService;
         }
         public IActionResult Index(string term="", int currentPage = 1)
         {
-            var movies = _movieService.List(term,true,currentPage);
+            var movies = _dieuLuatService.List(term,true,currentPage);
             return View(movies);
-        }
-
-        public IActionResult About()
-        {
-            return View();
         }
 
         public IActionResult MovieDetail(int movieId)
         {
-            var movie = _movieService.GetById(movieId);
+            var movie = _dieuLuatService.GetById(movieId);
             return View(movie);
         }
 

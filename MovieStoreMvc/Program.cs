@@ -9,11 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
-builder.Services.AddScoped<IGenreService, GenreService>();
+builder.Services.AddScoped<IChuongMucService, ChuongMucService>();
 builder.Services.AddScoped<IFileService, FileService>();
-builder.Services.AddScoped<IMovieService, MovieService>();
+builder.Services.AddScoped<IDieuLuatService, DieuLuatService>();
 
-builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("conn")));
+builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("connection")));
 
 // For Identity  
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()

@@ -1,4 +1,4 @@
-﻿@model MovieStoreMvc.Models.Domain.Genre
+﻿@model MovieStoreMvc.Models.Domain.ChuongMuc
 @{
 }
 
@@ -7,11 +7,11 @@
     <input type="hidden" class="input" asp-for="Id">
 
     <div class="input-container">
-        <label asp-for="GenreName" class="w-40">GenreName</label>
-        <input type="text" class="input" asp-for="GenreName">
+        <label asp-for="TenChuong" class="w-40">GenreName</label>
+        <input type="text" class="input" asp-for="TenChuong">
     </div>
     <div class="message-box pd-x-28 error">
-        <span asp-validation-for="GenreName"> </span>
+        <span asp-validation-for="TenChuong"> </span>
     </div>
 
     @if (TempData["msg"] != null)
@@ -23,6 +23,6 @@
 
     <div class="input-container">
         <button class="btn btn-default" type="submit">Save</button>
-        <a class="btn btn-sec" href="/Genre/GenreList">All records</a>
+        <a class="btn btn-sec" href="/ChuongMuc/ChuongMucList">All records</a>
     </div>
 </form>

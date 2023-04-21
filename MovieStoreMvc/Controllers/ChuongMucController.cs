@@ -6,24 +6,26 @@ using MovieStoreMvc.Repositories.Abstract;
 namespace MovieStoreMvc.Controllers
 {
     [Authorize]
-    public class GenreController : Controller
+    public class ChuongMucController : Controller
     {
-        private readonly IGenreService _genreService;
-        public GenreController(IGenreService genreService)
+        private readonly IChuongMucService _chuongMucService;
+
+        public ChuongMucController(IChuongMucService chuongMucService)
         {
-            _genreService = genreService;
+            _chuongMucService = chuongMucService;
         }
+
         public IActionResult Add()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Add(Genre model)
+        public IActionResult Add(ChuongMuc model)
         {
             if (!ModelState.IsValid)
                 return View(model);
-            var result = _genreService.Add(model);
+            var result = _chuongMucService.Add(model);
             if (result)
             {
                 TempData["msg"] = "Added Successfully";
@@ -38,20 +40,20 @@ namespace MovieStoreMvc.Controllers
 
         public IActionResult Edit(int id)
         {
-            var data = _genreService.GetById(id);
+            var data = _chuongMucService.GetById(id);
             return View(data);
         }
 
         [HttpPost]
-        public IActionResult Update(Genre model)
+        public IActionResult Update(ChuongMuc model)
         {
             if (!ModelState.IsValid)
                 return View(model);
-            var result = _genreService.Update(model);
+            var result = _chuongMucService.Update(model);
             if (result)
             {
                 TempData["msg"] = "Added Successfully";
-                return RedirectToAction(nameof(GenreList));
+                return RedirectToAction(nameof(ChuongMucList));
             }
             else
             {
@@ -59,20 +61,17 @@ namespace MovieStoreMvc.Controllers
                 return View(model);
             }
         }
-
-        public IActionResult GenreList()
+        
+        public IActionResult ChuongMucList()
         {
-            var data = this._genreService.List().ToList();
+            var data = this._chuongMucService.List().ToList();
             return View(data);
         }
 
         public IActionResult Delete(int id)
         {
-            var result = _genreService.Delete(id);
-            return RedirectToAction(nameof(GenreList));
+            var result = _chuongMucService.Delete(id);
+            return RedirectToAction(nameof(ChuongMucList));
         }
-
-
-
     }
 }

@@ -10,8 +10,8 @@ namespace MovieStoreMvc.Models.Domain
 
         }
 
-        public DbSet<Genre> Genre { get; set; }
-        public DbSet<MovieGenre> MovieGenre { get; set; }
-        public DbSet<Movie> Movie { get; set; }
+        public DbSet<ChuongMuc> ChuongMuc { get; set; }
+        public DbSet<DieuLuatChuongMuc> MovieGenre { get; set; }
+        public DbSet<DieuLuat> Movie { get; set; }
     }
 }
