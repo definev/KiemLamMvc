@@ -1,0 +1,14 @@
+﻿@model MovieStoreMvc.Models.Domain.Sections
+@{
+}
+<div class="movie-detail w-80 m-auto" style="background: white;">
+    <div class="detail-container">
+        <h3>@Model.Title</h3>
+        <p>Chương mục: @Model.Chapters?.Title</p>
+        <p>Điều khoản: @Model.Articles?.Title</p>
+        <p>Tiền phạt tối thiểu: @Model.Min</p>
+        <p>Tiền phạt tối đa: @Model.Max</p>
+        <p>Tiền phạt trung bình: @Model.Avg</p>
+        <p>Nội Dung: @Model.Content</p>
+    </div>
+</div>

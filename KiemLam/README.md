@@ -1,0 +1,1 @@
+docker run -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=Definev~2406' -e 'MSSQL_COLLATION=Latin1_General_100_CI_AS_SC_UTF8' -p 1433:1433 -d mcr.microsoft.com/azure-sql-edge:latest

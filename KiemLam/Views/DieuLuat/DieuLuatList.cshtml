@@ -1,0 +1,42 @@
+﻿@model MovieStoreMvc.Models.DTO.SectionsListVm
+@{
+}
+
+<div class="tbl-container">
+    <h2>Điều luật</h2>
+
+    <table>
+        <tr>
+            <th>Tên</th>
+            <th>Chương mục</th>
+            <th>Tiền phạt tối thiểu</th>
+            <th>Tiền phạt tối đa</th>
+            <th>Tiền phạt trung bình</th>
+            <th>Nội dung</th>
+            <th>Action</th>
+        </tr>
+        @foreach (var item in Model.Sections)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item?.Articles?.Title</td>
+                <td>@item?.Min</td>
+                <td>@item?.Max</td>
+                <td>@item?.Avg</td>
+                <td>@item?.Content</td>
+                <td>
+                    <a href="/DieuLuat/Edit?id=@item.ID" class="btn btn-default">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <a onclick="return window.confirm('Are you sure?')" href="/DieuLuat/Delete?id=@item.ID" class="btn btn-danger">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div class="input-container">
+        <a href="/DieuLuat/Add" class="btn btn-sec">Back</a>
+    </div>s
+</div>
